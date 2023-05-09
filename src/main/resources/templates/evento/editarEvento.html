@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <title>Editar Evento</title>
+</head>
+<body>
+<main>
+    <div class="container px-4 py-5">
+        <h1 class="pb-2 mb-3 border-bottom">Editar Evento</h1>
+<!--        th:href="@{'/evento/editar?id=' + ${evento.id_evento}}"-->
+        <img th:src="@{'/imagenEvento?id=' + ${evento.id_evento}}">
+        <form method="post" th:action="@{'/evento/guardarImagen?id='+ ${evento.id_evento}}" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="file" accept="image/*" class="form-control-file">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload image</button>
+        </form>
+        <form enctype="multipart/form-data" method="post" th:action="@{/evento/guardar}" th:object="${evento}" class="mt-2">
+            <input th:field="*{id_evento}" name="id_evento" type="hidden"/>
+            <div class="mb-3">
+                <label class="form-label">Nombre del Evento</label>
+                <input th:field="*{nombre}" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Local</label>
+                <select name="local" id="local" class="form-select">
+                    <option th:each="local : ${listaLocales}"
+                            th:value="${local.id_local}"
+                            th:text="${local.direccion}"
+                            th:selected="${local.id_local == evento.local.id_local}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <input th:field="${evento.descripcion}" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha</label>
+                <input th:field="${evento.fecha}" type="datetime-local" class="form-control">
+            </div>
+            <a th:href="@{/evento}" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
+</main>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
