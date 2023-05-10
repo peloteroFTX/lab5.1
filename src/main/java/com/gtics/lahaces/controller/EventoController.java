@@ -101,12 +101,10 @@ public class EventoController {
             }
         }
         return ".jpeg";
-//        LOGGER.error("Not a permitted file type");
-//        throw new InvalidFileTypeException("Not a permitted file type");
     }
 
     @PostMapping("/guardar")
-    public String guardarEvento(Evento evento, @RequestParam("file") MultipartFile file, RedirectAttributes attr) {
+    public String guardarEvento(Evento evento, RedirectAttributes attr) {
         eventoRepository.save(evento);
         System.out.println(evento.getId_evento());
         return "redirect:/evento";
